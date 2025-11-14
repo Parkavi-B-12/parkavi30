@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Parkavi | Web Developer Portfolio</title>
+
+  <!-- Fonts & Icons -->
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-..." crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+  <style>
+    /* ---------- Global ---------- */
+    html { scroll-behavior: smooth; }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Roboto', sans-serif;
+      color: #333;
+      background: #f8f9fa;
+      line-height: 1.6;
+    }
+    a { color: #007bff; text-decoration: none; }
+    a:hover { color: #0056b3; }
+
+    section { padding: 5rem 2rem; }
+    h1,h2,h3 { margin-bottom: 1rem; }
+
+    /* ---------- Header ---------- */
+    .header {
+      background-color: #203a43;
+      color: #fff;
+      padding: 12px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+    }
+    .logo { color: #ffd700; font-weight:700; font-size:1.2rem; text-decoration:none; }
+    .header .header-image img { width:44px; height:44px; border-radius:50%; object-fit:cover; border:2px solid #007bff; }
+    .header nav { display:flex; gap:18px; }
+    .header nav a { color:#dcdcdc; font-size:0.95rem; }
+    .header nav a:hover { color:#ffd700; }
+    .menu-icon { display:none; color:#ffd700; font-size:1.25rem; cursor:pointer; }
+
+    @media (max-width:768px){
+      .header nav { display:none; position:absolute; top:100%; left:0; right:0; flex-direction:column; background:#203a43; padding:10px 0; }
+      .header nav.active { display:flex; }
+      .menu-icon { display:block; }
+    }
+
+    /* ---------- Hero ---------- */
+    .hero {
+      min-height: 85vh;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      text-align:center;
+      color:#fff;
+      background: linear-gradient(to right, #0f2027, #203a43, #2c5364);
+      padding: 40px 20px;
+      background-image: url('hero.jpg'); /* replace with your hero image filename */
+      background-size: cover;
+      background-position: center;
+      background-attachment: fixed;
+    }
+    .hero-container { max-width: 900px; }
+    .hero h1 { font-size: 3rem; color:#ffd700; margin-bottom:10px; }
+    .hero h2 { font-size: 1.6rem; color: #f0f0f0; margin-bottom: 16px; }
+    .hero p { color:#dcdcdc; font-size:1.05rem; margin-bottom:16px; max-width:850px; margin-left:auto; margin-right:auto; }
+    .hero-buttons .btn { display:inline-block; padding:10px 20px; margin:8px; border-radius:6px; color:#fff; text-decoration:none; }
+    .btn-primary { background:#28a745; } .btn-secondary { background:#6c757d; }
+    .btn-primary:hover{ transform:scale(1.05); }
+    .social-links a{ margin:0 8px; color:#fff; font-weight:600; }
+
+    /* ---------- About ---------- */
+    .about { background: linear-gradient(to right, #40e0d0, #8a2be2); color:#111; text-align:center; padding:6rem 2rem; }
+    .about .section-title { font-size:2.4rem; color:#fff; margin-bottom:2rem; font-weight:700; }
+    .about-content { display:flex; flex-wrap:wrap; gap:2rem; justify-content:center; align-items:center; max-width:1100px; margin:0 auto; }
+    .about-image img { width:250px; height:250px; object-fit:cover; border-radius:50%; border:5px solid #007bff; box-shadow:0 5px 15px rgba(0,0,0,0.12); transition:transform .3s; }
+    .about-image img:hover { transform:scale(1.06); }
+    .about-text { max-width:700px; text-align:left; color:#fff; font-size:1.05rem; line-height:1.7; }
+
+    /* ---------- Profile Card 3D ---------- */
+    .profile-card { width:250px; height:250px; perspective:1000px; border-radius:20px; }
+    .profile-card .front, .profile-card .back {
+      position:absolute; inset:0; backface-visibility:hidden; border-radius:20px; display:flex; align-items:center; justify-content:center;
+      transition: transform 0.6s ease, box-shadow .3s;
+    }
+    .profile-card .front { background: linear-gradient(90deg,#9b4dca,#4a6ef1); }
+    .profile-card .back { background: linear-gradient(90deg,#4a6ef1,#9b4dca); transform:rotateY(180deg); color:#fff; text-align:center; padding:20px; }
+    .profile-card .profile-img { width:90%; height:90%; object-fit:cover; border-radius:50%; box-shadow:0 4px 12px rgba(0,0,0,.2); }
+    .profile-card:hover .front { transform: rotateY(180deg); }
+    .profile-card:hover .back { transform: rotateY(0deg); }
+
+    /* ---------- Skills ---------- */
+    .skills-section { background: linear-gradient(135deg,#89f7fe,#66a6ff); padding:50px 20px; display:flex; flex-direction:column; align-items:center; gap:20px; }
+    .section-title { font-size:36px; color:#333; letter-spacing:2px; }
+    .skills-wrapper { width:100%; overflow:hidden; }
+    .skills-container {
+      display:flex; gap:20px; padding:20px; justify-content:center; width:max-content;
+      animation: scrollSkills 12s linear infinite;
+    }
+    .skill-card { min-width:150px; padding:18px; border-radius:12px; background:#a6e2f3; text-align:center; box-shadow:0 4px 10px rgba(0,0,0,.08); transition:transform .3s; }
+    .skill-card img { width:70px; height:70px; margin-bottom:8px; transition: transform .4s; }
+    .skill-card p { font-weight:700; color:#333; }
+    .skill-card:hover { transform:scale(1.06); box-shadow:0 8px 20px rgba(0,0,0,.15); }
+    .skill-card:hover img { transform:rotate(360deg); }
+
+    @keyframes scrollSkills { 0%{ transform: translateX(100%);} 100%{ transform: translateX(-100%);} }
+
+    /* ---------- Projects ---------- */
+    .projects { background: linear-gradient(to right,#40e0d0,#8a2be2); color:#fff; text-align:center; }
+    .projects h2 { font-size:2.2rem; margin-bottom:.5rem; text-transform:uppercase; letter-spacing:1.5px; }
+    .projects p { margin-bottom:1.6rem; color:#f5f5f5; }
+    .projects-container { display:grid; gap:1.5rem; grid-template-columns: repeat(auto-fit,minmax(300px,1fr)); }
+    .project-card { background:#fff; color:#222; border-radius:12px; padding:18px; box-shadow:0 6px 20px rgba(0,0,0,.08); transition: transform .25s; }
+    .project-card:hover { transform: translateY(-8px) scale(1.02); }
+    .project-info h3 { color:#007bff; margin-bottom:8px; }
+    .project-status span { background:#e9ecef; padding:6px 10px; border-radius:20px; font-weight:700; }
+
+    /* ---------- Testimonials ---------- */
+    .testimonials { background: linear-gradient(135deg,#89f7fe,#66a6ff); padding:3rem 2rem; text-align:center; }
+    .testimonial-card { max-width:800px; margin:0 auto 1.5rem; background:#fff; padding:1.6rem; border-radius:8px; box-shadow:0 8px 24px rgba(0,0,0,.08); font-style:italic; }
+    .testimonial-card span { display:block; margin-top:10px; font-weight:700; color:#007bff; }
+
+    /* ---------- Contact ---------- */
+    .contact-section {
+      background: linear-gradient(to right,#40e0d0,#8a2be2), url('contact-bg.webp');
+      background-blend-mode: overlay;
+      background-size: cover;
+      color:#fff;
+      text-align:center;
+      padding:4rem 1rem;
+    }
+    .contact-details { display:flex; gap:20px; justify-content:center; flex-wrap:wrap; margin-top:1rem; }
+    .contact-item { display:flex; gap:8px; align-items:center; background:rgba(255,255,255,0.06); padding:12px 16px; border-radius:8px; }
+    .contact-item i { color:#007bff; font-size:1.2rem; }
+    .icon a{ margin:0 6px; font-size:1.3rem; color:#fff; }
+
+    /* ---------- Footer ---------- */
+    footer { background:#111; color:#ddd; padding:2rem 1rem; }
+    .footer-container { display:flex; flex-wrap:wrap; gap:20px; max-width:1200px; margin:0 auto; justify-content:space-between; }
+    .footer-about, .footer-links, .footer-social, .footer-newsletter { flex:1 1 220px; }
+    .footer-links ul { list-style:none; }
+    .footer-links ul li a { color:#aaa; }
+    .footer-newsletter input { padding:8px; border-radius:6px 0 0 6px; border:none; width:60%; }
+    .footer-newsletter button { padding:8px 12px; border-radius:0 6px 6px 0; border:none; background:#007bff; color:#fff; cursor:pointer; }
+
+    /* ---------- Utilities ---------- */
+    .go-to-top-btn {
+      display:none; position:fixed; bottom:20px; right:20px; width:44px; height:44px; border-radius:50%;
+      background:#007bff; color:#fff; border:none; font-size:20px; z-index:1000; cursor:pointer;
+    }
+    .scroll-progress { position:fixed; top:0; left:0; height:5px; width:0; background:#007bff; z-index:2000; transition:width .1s; }
+
+    /* Responsive tweaks */
+    @media (max-width:768px){
+      .about-text { text-align:center; font-size:1rem; }
+      .hero h1 { font-size:2rem; }
+      .section-title { font-size:1.8rem; }
+      .skills-container { animation-duration:18s; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- scroll progress -->
+  <div id="scroll-progress" class="scroll-progress"></div>
+
+  <!-- Header -->
+  <header class="header">
+    <div class="header-left" style="display:flex; align-items:center; gap:12px;">
+      <div class="header-image"><img src="park.jpg" alt="profile" onerror="this.src='https://via.placeholder.com/44'"></div>
+      <a class="logo" href="#">Parkavi B</a>
+    </div>
+
+    <i class="menu-icon" onclick="toggleMenu()">☰</i>
+
+    <nav>
+      <a href="#hero">Home</a>
+      <a href="#about">About</a>
+      <a href="#skills">Skills</a>
+      <a href="#projects">Projects</a>
+      <a href="#contact">Contact</a>
+    </nav>
+  </header>
+
+  <!-- Hero -->
+  <section id="hero" class="hero">
+    <div class="hero-container">
+      <h1 id="typingEffect"></h1>
+      <h2>Hi, I'm <strong>Parkavi</strong></h2>
+      <h2>Aspiring Frontend Developer</h2>
+      <p>
+        I'm a B.Tech IT student passionate about crafting modern and responsive websites.
+        Skilled with C, Python, Java (OOP), HTML, CSS and JavaScript — building user-centric designs.
+      </p>
+
+      <div class="hero-buttons">
+        <a class="btn btn-primary" href="#projects">View My Work</a>
+        <a class="btn btn-secondary" href="#contact">Contact Me</a>
+      </div>
+
+      <div class="social-links" style="margin-top:12px;">
+        <a href="https://github.com/Parkavi-B-12" target="_blank" rel="noopener">GitHub <i class="fa-solid fa-code"></i></a> &nbsp;
+        <a href="https://www.linkedin.com/in/parkavi-baskar-982511290" target="_blank" rel="noopener">LinkedIn <i class="fa-brands fa-linkedin"></i></a>
+      </div>
+    </div>
+  </section>
+
+  <!-- About -->
+  <section id="about" class="about">
+    <h2 class="section-title">About Me</h2>
+    <div class="about-content">
+      <div class="profile-card" data-tilt>
+        <div class="front">
+          <img class="profile-img" src="park.jpg" alt="Parkavi" onerror="this.src='https://via.placeholder.com/220'">
+        </div>
+        <div class="back">
+          <div>
+            <h2>Parkavi B</h2>
+            <p>B.Tech Information Technology<br>CIET</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="about-text">
+        <p>
+          Hello — I'm a B.Tech IT student focused on Frontend Development. I enjoy building interactive,
+          accessible, and responsive interfaces using HTML, CSS and JavaScript. I also have experience with Python and Java.
+        </p>
+        <p>
+          I value collaboration, clear communication, and continuous learning. Currently looking for frontend opportunities
+          and internships where I can contribute and grow.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Skills -->
+  <section id="skills" class="skills-section">
+    <h1 class="section-title">🚀 My Skills</h1>
+    <div class="skills-wrapper" aria-hidden="false">
+      <div class="skills-container" id="skillsContainer">
+        <div class="skill-card"><img src="https://cdn-icons-png.flaticon.com/512/732/732212.png" alt="HTML"><p>HTML</p></div>
+        <div class="skill-card"><img src="https://cdn-icons-png.flaticon.com/512/732/732190.png" alt="CSS"><p>CSS</p></div>
+        <div class="skill-card"><img src="https://cdn-icons-png.flaticon.com/512/5968/5968292.png" alt="JS"><p>JavaScript</p></div>
+        <div class="skill-card"><img src="https://cdn-icons-png.flaticon.com/512/226/226777.png" alt="Java"><p>Java</p></div>
+        <div class="skill-card"><img src="https://cdn-icons-png.flaticon.com/512/5968/5968350.png" alt="Python"><p>Python</p></div>
+        <div class="skill-card"><img src="https://cdn-icons-png.flaticon.com/512/1126/1126012.png" alt="React"><p>React</p></div>
+
+        <!-- Duplicate set so scrolling looks continuous -->
+        <div class="skill-card"><img src="https://cdn-icons-png.flaticon.com/512/732/732212.png" alt="HTML"><p>HTML</p></div>
+        <div class="skill-card"><img src="https://cdn-icons-png.flaticon.com/512/732/732190.png" alt="CSS"><p>CSS</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Projects -->
+  <section id="projects" class="projects">
+    <h2>My Projects</h2>
+    <p>Here are some projects I'm working on or planning — more details will be added soon.</p>
+
+    <div class="projects-container">
+      <div class="project-card">
+        <div class="project-info">
+          <h3>Quiz App</h3>
+          <p>Mobile-friendly quiz app with difficulty levels and instant scoring. Planned: Flutter + Firebase.</p>
+          <div class="project-status"><span>Status: In Progress</span></div>
+        </div>
+      </div>
+
+      <div class="project-card">
+        <div class="project-info">
+          <h3>Online Auction Platform</h3>
+          <p>Auction site with real-time bidding, profiles and notifications. Planned: Spring Boot + Bubble.io.</p>
+          <div class="project-status"><span>Status: Planned</span></div>
+        </div>
+      </div>
+
+      <div class="project-card">
+        <div class="project-info">
+          <h3>Portfolio Website</h3>
+          <p>Personal portfolio built with HTML, CSS & JavaScript to showcase my work and testimonials.</p>
+          <div class="project-status"><span>Status: Completed</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Testimonials -->
+  <section id="testimonials" class="testimonials">
+    <h2>Testimonials</h2>
+
+    <div class="testimonial-card">
+      <p>"Parkavi is a highly motivated and dedicated student with a passion for learning and developing practical solutions."</p>
+      <span>- Professor, CIET College</span>
+    </div>
+
+    <div class="testimonial-card">
+      <p>"During her internship she demonstrated great teamwork and an ability to apply theory to real projects."</p>
+      <span>- Internship Supervisor</span>
+    </div>
+
+    <div class="testimonial-card">
+      <p>"Her creative approach and problem solving make her an asset to any team."</p>
+      <span>- Classmate</span>
+    </div>
+  </section>
+
+  <!-- Contact -->
+  <section id="contact" class="contact-section">
+    <h2>Contact Me</h2>
+    <p>Want to collaborate or say hello? Reach out using the info below.</p>
+
+    <div class="contact-details">
+      <div class="contact-item"><i class="fa-solid fa-envelope"></i><span>Email:</span>&nbsp;<a href="mailto:parkavibaskar12@gmail.com">parkavibaskar12@gmail.com</a></div>
+      <div class="contact-item"><i class="fa-solid fa-phone"></i><span>Phone:</span>&nbsp;<a href="tel:+919047940700">+91 90479 40700</a></div>
+      <div class="contact-item"><i class="fa-solid fa-location-dot"></i><span>Location:</span>&nbsp;<span>Coimbatore, Tamil Nadu</span></div>
+    </div>
+
+    <div class="icon" style="margin-top:16px;">
+      <a href="https://www.instagram.com/kavi_12_01" target="_blank" rel="noopener">📸</a>
+      <a href="https://twitter.com" target="_blank" rel="noopener">🐦</a>
+      <a href="https://www.linkedin.com/in/parkavi-baskar-982511290" target="_blank" rel="noopener">💼</a>
+      <a href="https://github.com/Parkavi-B-12" target="_blank" rel="noopener">🐙</a>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <div class="footer-container">
+      <div class="footer-about">
+        <h3>Parkavi B</h3>
+        <p>A passionate web developer dedicated to building user-friendly, high-quality websites. Let's create something amazing together.</p>
+      </div>
+
+      <div class="footer-links">
+        <h4>Quick Links</h4>
+        <ul>
+          <li><a href="#about">About</a></li>
+          <li><a href="#skills">Skills</a></li>
+          <li><a href="#projects">Projects</a></li>
+          <li><a href="#contact">Contact</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-social">
+        <h4>Follow Me</h4>
+        <div>
+          <a href="https://www.linkedin.com/in/parkavi-baskar-982511290" target="_blank" rel="noopener"><i class="fa-brands fa-linkedin"></i> Linkedin</a><br>
+          <a href="https://github.com/Parkavi-B-12" target="_blank" rel="noopener"><i class="fa-brands fa-github"></i> GitHub</a>
+        </div>
+      </div>
+
+      <div class="footer-newsletter">
+        <h4>Newsletter</h4>
+        <form onsubmit="event.preventDefault(); alert('Thanks for subscribing!');">
+          <input type="email" placeholder="Enter your email" required>
+          <button type="submit">Subscribe</button>
+        </form>
+      </div>
+    </div>
+
+    <div style="text-align:center; margin-top:16px; color:#bbb;">✨ Made with ❤️ by Parkavi ✨</div>
+  </footer>
+
+  <!-- Go to top -->
+  <button id="goToTopBtn" class="go-to-top-btn" title="Go to top" onclick="scrollToTop()">↑</button>
+
+  <!-- External scripts (VanillaTilt) -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/vanilla-tilt/1.7.2/vanilla-tilt.min.js" integrity="sha512-..." crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+  <script>
+    /* ---------- Menu toggle ---------- */
+    function toggleMenu(){
+      const nav = document.querySelector('.header nav');
+      if(nav) nav.classList.toggle('active');
+    }
+
+    /* ---------- Fade-in on scroll ---------- */
+    window.addEventListener('scroll', function(){
+      const fadeEls = document.querySelectorAll('.fade-in, .testimonial-card, .projects-container');
+      fadeEls.forEach(el => {
+        const top = el.getBoundingClientRect().top;
+        if(top < window.innerHeight - 50) el.classList.add('active');
+      });
+
+      // scroll progress bar
+      const progress = document.getElementById('scroll-progress');
+      if(progress){
+        const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+        const scrolled = (window.scrollY / (docHeight || 1)) * 100;
+        progress.style.width = scrolled + '%';
+      }
+
+      // show/hide go to top btn
+      const goBtn = document.getElementById('goToTopBtn');
+      if(goBtn) {
+        if(window.scrollY > 120) goBtn.style.display = 'block'; else goBtn.style.display = 'none';
+      }
+    });
+
+    /* ---------- Scroll to top ---------- */
+    function scrollToTop(){
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    /* ---------- Typing effect ---------- */
+    (function(){
+      const text = "Welcome to My Portfolio!";
+      let idx = 0;
+      const el = document.getElementById('typingEffect');
+      if(!el) return;
+      el.style.fontSize = '1.6rem';
+      el.style.color = '#ffd700';
+      function type(){
+        if(idx < text.length){
+          el.textContent += text.charAt(idx++);
+          setTimeout(type, 70);
+        }
+      }
+      type();
+    })();
+
+    /* ---------- VanillaTilt for profile card (if library loaded) ---------- */
+    if(typeof VanillaTilt !== 'undefined'){
+      const tiltEl = document.querySelector(".profile-card");
+      if(tiltEl) VanillaTilt.init(tiltEl, { max: 20, speed: 400, glare: true, "max-glare": 0.4 });
+    }
+
+    /* ---------- Pause skill scroll on hover ---------- */
+    (function(){
+      const skillsContainer = document.getElementById('skillsContainer');
+      if(skillsContainer){
+        skillsContainer.addEventListener('mouseenter', () => skillsContainer.style.animationPlayState = 'paused');
+        skillsContainer.addEventListener('mouseleave', () => skillsContainer.style.animationPlayState = 'running');
+      }
+    })();
+
+    /* Defensive: ensure nav collapse on link click (mobile) */
+    document.querySelectorAll('.header nav a').forEach(a => {
+      a.addEventListener('click', () => {
+        const nav = document.querySelector('.header nav');
+        if(nav && nav.classList.contains('active')) nav.classList.remove('active');
+      });
+    });
+  </script>
+</body>
+</html>
